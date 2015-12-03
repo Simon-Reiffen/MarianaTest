@@ -1,17 +1,15 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from fizzbuzz import views
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework import renderers
+from rest_framework.routers import DefaultRouter
+
+from fizzbuzz.views import fizzbuzzViewSet
+
+router = DefaultRouter()
+router.register(r'^fizzbuzz', fizzbuzzViewSet)
 
 urlpatterns = [
-    url(r'^fizzbuzz/GET/$', views.get),
-    url(r'fizzbuzz/GET/(?P<pk>[0-9]+)/$', views.getI),	
-	url(r'fizzbuzz/POST/(?P<pk>.*)/$', views.post, name='post'),
-
-	url(r'fizzbuzz/SWISS/(?P<pk>.*)/$', views.swiss),
-	url(r'fizzbuzz/SWISS/(?P<pk>[ 0-9]+)/$', views.swiss),
-	url(r'fizzbuzz/SWISS/$', views.swiss),
-	
-	url(r'fizzbuzz/demo/(?P<pk>.*)/$', views.demo),
+    url(r'^', include(router.urls)),
 
 ]
-urlpatterns = format_suffix_patterns(urlpatterns)
